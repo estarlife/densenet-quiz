@@ -68,54 +68,29 @@ def densenet(images, num_classes=200, is_training=False,
     end_points = {}
 
     with tf.variable_scope(scope, 'DenseNet', [images, num_classes]):
-        with slim.arg_scope(bn_drp_scope(is_training=is_training, keep_prob=dropout_keep_prob)) as ssc:
-		
+        with slim.arg_scope(bn_drp_scope(is_training=is_training, keep_prob=dropout_keep_prob)) as ssc:	
             ##########################
             # Put your code here.
             net = images
             net = slim.conv2d(net, 2*growth, [7,7], stride=2, scope='conv1')
             net = slim.max_pool2d(net, [3,3], stride=2, padding='SAME', scope='pool1')
-<<<<<<< HEAD
-
             net = block(net, 6, growth, scope='block1')
             net = transition(net, reduce_dim(net), scope='transition1')
-
-=======
-            
             net = block(net, 6, growth, scope='block1')
             net = transition(net, reduce_dim(net), scope='transition1')
- 
->>>>>>> 5557b3a9a2016087cd825bf7df07c84f50581e37
             net = block(net, 12, growth, scope='block2')
             net = transition(net, reduce_dim(net), scope='transition2')
-
             net = block(net, 24, growth, scope='block3')
-            net = transition(net, reduce_dim(net), scope='transition3')
-	
+            net = transition(net, reduce_dim(net), scope='transition3')	
             net = block(net, 16, growth, scope='block4')
-<<<<<<< HEAD
             net = transition(net, reduce_dim(net), scope='transition4')
-
-            # Global average pooling.
-            net = slim.avg_pool2d(net, net.shape[1:3], scope='global_average')
-            net = slim.conv2d(net, num_classes, [1, 1],  scope='logits')
-
-            logits = tf.squeeze(net, name='Squeeze')
-
-=======
-	    net = transition(net, reduce_dim(net), scope='transition4')
-
             # Global average pooling.			
             net = slim.avg_pool2d(net, net.shape[1:3], scope='global_average')
-            net = slim.conv2d(net, num_classes, [1, 1],  scope='logits')
-            
+            net = slim.conv2d(net, num_classes, [1, 1],  scope='logits')            
             logits = tf.squeeze(net, name='Squeeze')
-            
->>>>>>> 5557b3a9a2016087cd825bf7df07c84f50581e37
             end_points['Logits'] = logits
             end_points['predictions'] = slim.softmax(logits, scope='predictions')
             ##########################
-
     return logits, end_points
 
 
