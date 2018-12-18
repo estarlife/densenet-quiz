@@ -24,12 +24,6 @@ def transition(net, num_outputs, scope='OK'):
 	net = slim.avg_pool2d(net, [2, 2], stride=2, scope=scope+'avgpool')
 	return net
 
-def transition(net, num_outputs, scope='OK'):
-	net = slim.conv2d(net, num_outputs, [1, 1], scope= scope+'_conv')
-	net = slim.avg_pool2d(net, [2, 2], stride=2, scope=scope+'avgpool')
-	
-	return net
-	
 def block(net, layers, growth, scope='block'):
     for idx in range(layers):
         bottleneck = bn_act_conv_drp(net, 4 * growth, [1, 1],
