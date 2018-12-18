@@ -81,7 +81,7 @@ def densenet(images, num_classes=1001, is_training=False,
             net = transition(net, reduce_dim(net), scope='transition3')
  
             net = block(net, 16, growth, scope='block4')
-			net = transition(net, reduce_dim(net), scope='transition4')
+	    net = transition(net, reduce_dim(net), scope='transition4')
 
             # Global average pooling.			
             net = slim.avg_pool2d(net, net.shape[1:3], scope='global_average')
